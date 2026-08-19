@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+    </head>
+    <body>
+        <h1>Analysis Result</h1>
+        <p>Audio File: {{audio_file.filename}}</p>
+        <p>BPM: {{bpm}}</p>
+        <p>Note Value: {{note_value}}</p>
+
+        <h2>Summary</h2>
+        <p>Tendency: {{ "%.3f" | format(summary.average) }}s</p>
+        <p>Stability: {{ "%.3f" | format(summary.stdev) }}s ({{ summary.judgment }})</p>
+        <p>Max Deviation: {{ "%.3f" | format(summary.extreme) }}s at {{ "%.3f" | format(summary.extreme_time) }}s</p>
+    </body>
+</html>

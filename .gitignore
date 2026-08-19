@@ -1,0 +1,6 @@
+*.mp3
+!drum_sample_174bpm.mp3
+!drum_sample_87bpm.mp3
+.venv/
+__pycache__/
+*.pyc

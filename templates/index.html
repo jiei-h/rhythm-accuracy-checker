@@ -6,5 +6,23 @@
     <body>
         <h1>Rhythm Accuracy Checker</h1>
         <p>Upload an audio file to check its rhythm accuracy.</p>
+
+        <form action="/analyze" method="post" enctype="multipart/form-data">
+            <label for="audio_file">Audio File:</label>
+            <input type="file" id="audio_file" name="audio_file" accept="audio/*" required><br><br>
+
+            <label for="bpm">BPM (Beats Per Minute):</label>
+            <input type="number" id="bpm" name="bpm" min="1" step="1" required><br><br>
+
+            <label for="note_value">Note Value:</label>
+            <select id="note_value" name="note_value" required>
+                <option value="4">4th notes</option>
+                <option value="8">8th notes</option>
+                <option value="16">16th notes</option>
+                <option value="32">32nd notes</option>
+            </select><br><br>
+
+            <button type="submit">Upload</button>
+        </form>
     </body>
 </html>
