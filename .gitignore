@@ -4,3 +4,5 @@
 .venv/
 __pycache__/
 *.pyc
+tempo_graph.png
+static/*.png

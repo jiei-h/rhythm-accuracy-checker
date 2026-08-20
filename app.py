@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import uuid
-from project import load_audio, get_duration, onset_detect, calculate_deviations, summarize, evaluate_stability, DeviationSummary
+from project import load_audio, get_duration, onset_detect, calculate_deviations, summarize, evaluate_stability, plot_deviation, DeviationSummary, OUTPUT_GRAPH_FILENAME
 
 app = Flask(__name__)
 
@@ -25,7 +25,11 @@ def analyze():
     judgment = evaluate_stability(stdev)
     summary = DeviationSummary(average, stdev, extreme, extreme_time, judgment)
 
-    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, summary=summary)
+    graph_filename = f"{uuid.uuid4()}_{OUTPUT_GRAPH_FILENAME}"
+    graph_path = f"static/{graph_filename}"
+    plot_deviation(onsets, deviations, summary, graph_path)
+
+    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, summary=summary, graph_filename=graph_filename)
 
 
 if __name__ == "__main__":

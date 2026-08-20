@@ -145,7 +145,7 @@ def evaluate_stability(stdev):
         return "Poor"
 
 
-def plot_deviation(onsets, deviations, summary):
+def plot_deviation(onsets, deviations, summary, graph_filename=OUTPUT_GRAPH_FILENAME):
     # 時系列でグラフ化
     plt.figure(figsize=(12, 4))
     plt.axhline(y=0, color="red", linewidth=1.5)
@@ -163,7 +163,7 @@ def plot_deviation(onsets, deviations, summary):
     plt.ylabel("Deviation(s)")
     plt.title("Tempo Deviation Over Time")
     plt.legend(loc="upper right")
-    plt.savefig(OUTPUT_GRAPH_FILENAME)
+    plt.savefig(graph_filename)
 
 
 if __name__ == "__main__":
