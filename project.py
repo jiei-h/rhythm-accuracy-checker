@@ -3,6 +3,8 @@ import librosa
 import statistics
 from statistics import StatisticsError
 from soundfile import LibsndfileError
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
 
