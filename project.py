@@ -16,6 +16,14 @@ FAIR_THRESHOLD = 0.040
 OUTPUT_GRAPH_FILENAME = "tempo_graph.png"
 
 
+class InvalidInputError(Exception):
+    pass
+
+
+class AudioProcessingError(Exception):
+    pass
+
+
 @dataclass
 class DeviationSummary:
     average: float
@@ -34,26 +42,23 @@ class DeviationSummary:
 
 def main():
     # inputを受け取る(基準BPM、基準音符、音源ファイル)
-    filename, bpm, note_value = get_user_input()
-    # 結果(graph, image, summary)を出力
     try:
+        filename, bpm, note_value = get_user_input()
         y, sr = load_audio(filename)
-    except LibsndfileError:
-        sys.exit("File does not exist, is corrupted or, is not a supported format")
-
-    duration = get_duration(y, sr)
-    onsets = onset_detect(y, sr)
-    deviations = calculate_deviations(bpm, note_value, onsets, duration)
-
-    try:
+        duration = get_duration(y, sr)
+        onsets = onset_detect(y, sr)
+        deviations = calculate_deviations(bpm, note_value, onsets, duration)
+    
         average, stdev, extreme, extreme_time = summarize(deviations, onsets)
-    except StatisticsError:
-        sys.exit("Sound detection failed")
-        
-    judgment = evaluate_stability(stdev)
-    summary = DeviationSummary(average, stdev, extreme, extreme_time, judgment)
 
-    plot_deviation(onsets, deviations, summary)
+        judgment = evaluate_stability(stdev)
+        summary = DeviationSummary(average, stdev, extreme, extreme_time, judgment)
+        plot_deviation(onsets, deviations, summary)
+
+    except InvalidInputError as e:
+        sys.exit(str(e))
+    except AudioProcessingError as e:
+        sys.exit(str(e))
 
     print(summary.as_text())
     print(f"Graph saved to {OUTPUT_GRAPH_FILENAME}")
@@ -80,8 +85,11 @@ def get_user_input():
 
 def load_audio(filename):
     # ファイルを読み込む
-    y, sr = librosa.load(filename)
-    return y, sr
+    try:
+        y, sr = librosa.load(filename)
+        return y, sr
+    except LibsndfileError:
+        raise AudioProcessingError("File does not exist, is corrupted or, is not a supported format")
 
 
 def get_duration(y, sr):
