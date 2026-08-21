@@ -1,8 +1,9 @@
 import os
 import uuid
 from flask import Flask, render_template, request, send_from_directory
-from project import load_audio, get_duration, onset_detect, calculate_deviations, summarize, evaluate_stability, plot_deviation, DeviationSummary, OUTPUT_GRAPH_FILENAME
-
+from src.audio.processor import load_audio, get_duration, onset_detect
+from src.analysis.metrics import calculate_deviations, summarize, evaluate_stability, DeviationSummary
+from src.output.report import plot_deviation
 app = Flask(__name__)
 
 @app.route("/")
