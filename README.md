@@ -14,30 +14,42 @@ Unlike basic analytical tools, this application converts raw timestamps into **m
 - **🧠 Dual-Metric Accuracy Evaluation:** Breaks timing accuracy down into **Tendency** (overall rushing/dragging habits) and **Stability** (unsteadiness and jitter), ensuring cancellation effects do not mask performance flaws.
 
 ## 🛠️ Project Architecture
-The application features a production-grade modularized directory structure, ensuring maximum maintainability, loose coupling, and clean separation of concerns:
+
+The application has been refactored into a production-grade, modular package structure. This adheres to the Single Responsibility Principle, isolates temporary dynamic assets, and keeps the project clean and maintainable.
 
 ```text
 rhythm-accuracy-checker/
 │
-├── src/                    # Core Modular Package
-│   ├── audio/
-│   │   └── processor.py    # Audio processing & onset detection (Librosa)
+├── data/                   # Dynamic runtime storage (Git-ignored)
+│   ├── audio_files/        # Stores securely managed temporary user audio uploads
+│   └── graphs/             # Caches dynamically generated time-series tempo graphs
+│
+├── docs/                   # Project documentation assets
+│   └── images/             # Stores illustration screenshots used in this README
+│
+├── src/                    # Core Analytical Engine Package
 │   ├── analysis/
-│   │   └── metrics.py      # Musician-friendly calculations & statistics
+│   │   └── metrics.py      # Computes statistics and maps raw seconds to Bars & Beats
+│   ├── audio/
+│   │   └── processor.py    # Manages audio signal loading and onset tracking via Librosa
 │   ├── output/
-│   │   └── report.py       # Visual graph generation (Matplotlib)
-│   └── exceptions.py       # Centralized custom error definitions
+│   │   └── report.py       # Handles rendering and saving matplotlib visual diagrams
+│   └── exceptions.py       # Centralized hub for custom analytical exception handlers
 │
-├── templates/              # Jinja2 HTML Templates (index.html, result.html)
-├── static/                 # Fixed design assets (CSS, styling templates)
+├── static/                 # Fixed design assets (CSS stylesheets and UI templates)
+├── templates/              # Jinja2 HTML blueprints for user interface dashboards
+│   ├── index.html          # Web controller panel for multi-parameter session input
+│   └── result.html         # Rich evaluation dashboard for displaying micro-timing results
 │
-├── data/                   # Git-Ignored Temporary Storage
-│   ├── audio_files/        # Securely managed user audio uploads
-│   └── graphs/             # Dynamically generated tempo graph cache
+├── tests/                  # Automated verification laboratory folder
+│   └── test_project.py     # Contains isolated unit test suites using pytest engine
 │
-├── app.py                  # Main entrypoint / Flask Web Server Controller
-├── tests/                  # Automated automated testing suite
-└── requirements.txt        # Third-party dependency definitions
+├── .gitignore              # Orchestrates deployment-ready file exclusion architecture
+├── app.py                  # Main operational controller / Flask web server gatekeeper
+├── drum_sample_174bpm.mp3  # Local verification reference audio (174 BPM 8th-note pattern)
+├── drum_sample_87bpm.mp3   # Local verification reference audio (87 BPM 8th-note pattern)
+├── README.md               # Executive documentation and system architectural manual
+└── requirements.txt        # Exact manifest pinning third-party module ecosystem
 ```
 
 ## 🚀 How to Run Locally
