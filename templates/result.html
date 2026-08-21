@@ -14,6 +14,6 @@
         <p>Stability: {{ "%.3f" | format(summary.stdev) }}s ({{ summary.judgment }})</p>
         <p>Max Deviation: {{ "%.3f" | format(summary.extreme) }}s at {{ "%.3f" | format(summary.extreme_time) }}s</p>
 
-        <img src="{{ url_for('static', filename=graph_filename) }}" alt="Tempo deviation graph">
+        <img src="{{ url_for('serve_graph', filename=graph_filename) }}" alt="Tempo deviation graph">
     </body>
 </html>

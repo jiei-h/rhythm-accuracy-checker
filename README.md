@@ -23,7 +23,7 @@ Stability: 0.035s (Fair)
 Max Deviation: 0.085s (at 5.085s)
 Graph saved to tempo_graph.png
 ```
-![Tempo deviation graph](example_output.png)
+![Tempo deviation graph](docs/images/example_output.png)
 
 ## Project Files
 - `project.py` - Contains the `main` function and all core logic: loading the audio file, detecting onsets, calculating tempo deviations, evaluating stability, and generating the output graph.

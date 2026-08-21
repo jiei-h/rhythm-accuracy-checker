@@ -1,4 +1,5 @@
 import sys
+import os
 import librosa
 import statistics
 from statistics import StatisticsError
@@ -13,7 +14,7 @@ EXCELLENT_THRESHOLD = 0.010
 GOOD_THRESHOLD = 0.020
 FAIR_THRESHOLD = 0.040
 
-OUTPUT_GRAPH_FILENAME = "tempo_graph.png"
+OUTPUT_GRAPH_FILENAME = "data/graphs/tempo_graph.png"
 
 
 class InvalidInputError(Exception):

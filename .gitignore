@@ -5,9 +5,9 @@ __pycache__/
 
 # 生成されるデータファイルごとに無視する（確認用音源は残す）
 data/audio_files/*
-!data/audio_files/drum_sample_174bpm.mp3
-!data/audio_files/drum_sample_87bpm.mp3
 data/graphs/*
 
 # フォルダの構造のみGitに保存する。
 !.gitkeep
+!drum_sample_174bpm.mp3
+!drum_sample_87bpm.mp3

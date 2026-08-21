@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+import os
 import uuid
+from flask import Flask, render_template, request, send_from_directory
 from project import load_audio, get_duration, onset_detect, calculate_deviations, summarize, evaluate_stability, plot_deviation, DeviationSummary, OUTPUT_GRAPH_FILENAME
 
 app = Flask(__name__)
@@ -12,12 +13,16 @@ def index():
 @app.route("/analyze", methods=["POST"])
 def analyze():
     audio_file = request.files["audio_file"]
+    
+    # アップロードされた音源を　data/audio_files/ に保存する
     unique_filename = f"{uuid.uuid4()}_{audio_file.filename}"
-    audio_file.save(unique_filename)
+    audio_save_path = os.path.join("data/audio_files", unique_filename)
+    audio_file.save(audio_save_path)
     bpm = int(request.form["bpm"])
     note_value = int(request.form["note_value"])
 
-    y, sr = load_audio(unique_filename)
+    # 音源を読み込み、解析を行う
+    y, sr = load_audio(audio_save_path)
     duration = get_duration(y, sr)
     onsets = onset_detect(y, sr)
     deviations = calculate_deviations(bpm, note_value, onsets, duration)
@@ -25,11 +30,19 @@ def analyze():
     judgment = evaluate_stability(stdev)
     summary = DeviationSummary(average, stdev, extreme, extreme_time, judgment)
 
-    graph_filename = f"{uuid.uuid4()}_{OUTPUT_GRAPH_FILENAME}"
-    graph_path = f"static/{graph_filename}"
+    # グラフを生成し、staticフォルダに保存する
+    graph_filename = f"{uuid.uuid4()}_tempo_graph.png"
+    graph_path = os.path.join("data", "graphs", graph_filename)
     plot_deviation(onsets, deviations, summary, graph_path)
 
     return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, summary=summary, graph_filename=graph_filename)
+
+
+# data/graphs/ の中の画像を画面に表示するためのルート（実務の定番テクニック）
+@app.route("/images/<filename>")
+def serve_graph(filename):
+    # data/graphs フォルダの中から、指定されたファイル名の画像を安全に画面へ返します
+    return send_from_directory(os.path.join("data", "graphs"), filename)
 
 
 if __name__ == "__main__":
