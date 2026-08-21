@@ -69,16 +69,16 @@ def get_user_input():
     try:
         bpm = float(input("BPM: "))
     except ValueError:
-        sys.exit("BPM must be a number")
+        raise InvalidInputError("BPM must be a number")
     if bpm <= 0:
-        sys.exit("BPM must be a positive number")
+        raise InvalidInputError("BPM must be a positive number")
 
     try:
         note_value = float(input("Note Value: "))
     except ValueError:
-        sys.exit("Note Value must be a number")
+        raise InvalidInputError("Note Value must be a number")
     if note_value not in [4, 8, 16, 32]:
-        sys.exit("Note Value must be one of: 4, 8, 16, 32")
+        raise InvalidInputError("Note Value must be one of: 4, 8, 16, 32")
 
     return filename, bpm, note_value
 
@@ -125,7 +125,7 @@ def calculate_deviations(bpm, note_value, onsets, duration):
 
 def summarize(deviations, onsets):
     if len(deviations) < 2:
-        raise StatisticsError("Sound detection failed")
+        raise AudioProcessingError("Sound detection failed")
     # 傾向(Rushing/Dragging)
     average = statistics.mean(deviations)
     # 安定性(ズレのばらつき)
