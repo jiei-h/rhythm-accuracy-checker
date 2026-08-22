@@ -46,9 +46,28 @@ rhythm-accuracy-checker/
 ├── app.py                  # Main operational controller / Flask web server gatekeeper
 ├── drum_sample_174bpm.mp3  # Local verification reference audio (174 BPM 8th-note pattern)
 ├── drum_sample_87bpm.mp3   # Local verification reference audio (87 BPM 8th-note pattern)
+├── pytest.ini              # Centralized configuration to streamline automated testing search paths
 ├── README.md               # Executive documentation and system architectural manual
 └── requirements.txt        # Exact manifest pinning third-party module ecosystem
 ```
+
+## 📂 Project Files Explained
+- `app.py` - The main operational controller and entry point of the Web application. Handles Flask routing, multi-parameter user form data acquisition, and secure temporary file management.
+- `src/` - The core analytical engine package, modularized for maximum readability and loose coupling:
+  - `src/audio/processor.py` - Manages audio signal loading and tracks precision peak onsets using the `librosa` library.
+  - `src/analysis/metrics.py` - The primary computational engine. Calculates micro-timing deviations, evaluates groove stability ratings, and mathematically maps raw timestamps into musical Bars & Beats.
+  - `src/output/report.py` - Generates, renders, and caches the time-series visualization plots using `matplotlib`.
+  - `src/exceptions.py` - Dictates centralized custom exception classes for robust error handling and platform reliability.
+- `templates/` - Contains the structural Jinja2 HTML blueprints (`index.html` and `result.html`) for generating the frontend user dashboard.
+- `static/` - Reserved repository folder designated for holding fixed presentation design sheets and structural assets.
+- `data/` - Secure runtime scratchpad directory completely isolated from Git tracking via `.gitignore`:
+  - `data/audio_files/` - Safely caches user drum recording tracks during analytical evaluation loops.
+  - `data/graphs/` - Houses dynamically rendered tempo deviation graph outputs.
+- `tests/` - The isolated continuous integration folder built explicitly for system validation routines:
+  - `tests/test_project.py` - Harnesses `pytest` to execute unit tests, verifying the strict alignment of calculations, evaluations, and text formatting.
+- `pytest.ini` - Centralized test suite configuration. Automatically binds the root path (`pythonpath = .`) to eliminate repetitive manual environment variables, optimizing developer workflows.
+- `requirements.txt` - The exact environment manifest pinning the precise versions of the third-party dependency ecosystem.
+- `drum_sample_174bpm.mp3`, `drum_sample_87bpm.mp3` - High-fidelity reference performance audio files targeted for system testing and developer verification.
 
 ## 🚀 How to Run Locally
 
@@ -76,4 +95,3 @@ Upload your drum track, punch in your target BPM and note value, and receive an 
 ## 📚 References
 - Physics Today, ["Musical rhythms: The science of being slightly off"](https://aip.org)
 - Friberg, A. and Sundberg, J. (1995), as cited in [Frontiers in Psychology](https://frontiersin.org)
-
