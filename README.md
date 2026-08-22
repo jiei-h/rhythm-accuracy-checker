@@ -1,7 +1,5 @@
 # 🥁 Rhythm Accuracy Checker (Web Edition)
 
-#### Video Demo:  <https://youtu.be/WSV9BiUh134>
-
 #### Description:
 Rhythm Accuracy Checker is a modern web application designed for musicians and drum educators. It analyzes audio recordings of drum performances and quantifies timing accuracy by comparing hit onsets against a mathematically perfect tempo grid. 
 
