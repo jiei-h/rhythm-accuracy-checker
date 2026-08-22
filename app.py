@@ -19,24 +19,36 @@ def analyze():
     unique_filename = f"{uuid.uuid4()}_{audio_file.filename}"
     audio_save_path = os.path.join("data/audio_files", unique_filename)
     audio_file.save(audio_save_path)
+    
+    # フォームからBPMを受け取る
     bpm = int(request.form["bpm"])
-    note_value = int(request.form["note_value"])
+    
+    # フォームから拍子（分子・分母）を受け取る
+    time_num = int(request.form["time_num"])
+    time_den = int(request.form["time_den"])
 
     # 音源を読み込み、解析を行う
     y, sr = load_audio(audio_save_path)
     duration = get_duration(y, sr)
     onsets = onset_detect(y, sr)
-    deviations = calculate_deviations(bpm, note_value, onsets, duration)
+    
+    
+    # --- ⚠️ 一時的な措置（ステップ3に繋ぐためのダミー処理） ---
+    # ロジックを完全に組み直す前のつなぎとして、time_den をこれまでの note_value の代わりに仮で渡しておきます
+    deviations = calculate_deviations(bpm, time_den, onsets, duration)
     average, stdev, extreme, extreme_time = summarize(deviations, onsets)
+    # --------------------------------------------------------
+    
+    
     judgment = evaluate_stability(stdev)
     summary = DeviationSummary(average, stdev, extreme, extreme_time, judgment)
 
-    # グラフを生成し、staticフォルダに保存する
+    # グラフを生成し、保存する
     graph_filename = f"{uuid.uuid4()}_tempo_graph.png"
     graph_path = os.path.join("data", "graphs", graph_filename)
     plot_deviation(onsets, deviations, summary, graph_path)
 
-    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, summary=summary, graph_filename=graph_filename)
+    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=time_den, summary=summary, graph_filename=graph_filename)
 
 
 # data/graphs/ の中の画像を画面に表示するためのルート（実務の定番テクニック）
