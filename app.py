@@ -46,7 +46,7 @@ def analyze():
     graph_path = os.path.join("data", "graphs", graph_filename)
     plot_deviation(onsets, deviations, summary, graph_path)
 
-    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, summary=summary, graph_filename=graph_filename)
+    return render_template("result.html", audio_file=audio_file, bpm=bpm, note_value=note_value, time_num=time_num, time_den=time_den, summary=summary, graph_filename=graph_filename)
 
 
 # data/graphs/ の中の画像を画面に表示するためのルート（実務の定番テクニック）

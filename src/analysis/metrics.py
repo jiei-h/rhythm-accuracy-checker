@@ -25,7 +25,7 @@ class DeviationSummary:
         )
         
 
-def calculate_deviations(bpm, time_num, time_den, onsets):
+def calculate_deviations(bpm, time_num, time_den, note_value, onsets):
     # 1. 拍の長さを計算
     # 4/4 なら60/bpm、6/8 なら30/bpmに切り替わる
     beat_duration = 60 / bpm * (4 / time_den)
@@ -41,7 +41,10 @@ def calculate_deviations(bpm, time_num, time_den, onsets):
         
         # 3. 音源における１番細かいグリッド（例：16分音符）に変換
         # ここでは、１拍をさらに細かく分割したグリッドに変換するため、time_numを掛ける
-        subdivision = 4
+        subdivision = note_value / time_den
+        if subdivision < 1:
+            subdivision = 1  # 1拍より細かいグリッドは考慮しない（例：32分音符や64分音符は無視）
+            
         grid_per_measure = time_num * subdivision
         
         # 4. 最も近いグリッドの位置を計算

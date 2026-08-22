@@ -7,12 +7,13 @@
         <h1>Analysis Result</h1>
         <p>Audio File: {{audio_file.filename}}</p>
         <p>BPM: {{bpm}}</p>
+        <p>Time Signature: {{time_num}}/{{time_den}}</p>
         <p>Note Value: {{note_value}}</p>
 
         <h2>Summary</h2>
         <p>Tendency: {{ "%.3f" | format(summary.average) }}s</p>
         <p>Stability: {{ "%.3f" | format(summary.stdev) }}s ({{ summary.judgment }})</p>
-        <p>Max Deviation: {{ "%.3f" | format(summary.extreme) }}s at {{ "%.3f" | format(summary.extreme_time) }}s</p>
+        <p>Max Deviation: {{ "%.3f" | format(summary.extreme) }}s at {{ summary.extreme_time }}</p>
 
         <img src="{{ url_for('serve_graph', filename=graph_filename) }}" alt="Tempo deviation graph">
     </body>
