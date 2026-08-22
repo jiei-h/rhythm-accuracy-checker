@@ -91,6 +91,8 @@ Upload your drum track, punch in your target BPM and note value, and receive an 
 
 ## 📋 Limitations
 - **Consistent Subdivision Assumptions:** The current analysis grid expects a uniform rhythm architecture throughout the runtime of the recording. Highly erratic rhythmic shifts (e.g., metric modulation or mid-song time signature changes) require further code extensions.
+- **First-Onset Alignment Vulnerability:** To eliminate initial silence, the engine anchors the tempo grid to the very first detected onset (`onsets[0]`). However, if an unintended transient noise (e.g., mic handling, room ambience, breathing) is falsely captured as the first onset, the entire evaluation grid will shift out of phase, leading to skewed deviation results. Users must ensure their recordings have clean, noise-free intros.
+
 
 ## 📚 References
 - Physics Today, ["Musical rhythms: The science of being slightly off"](https://aip.org)
