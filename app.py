@@ -6,6 +6,11 @@ from src.analysis.metrics import calculate_deviations, summarize, evaluate_stabi
 from src.output.report import plot_deviation
 app = Flask(__name__)
 
+
+os.makedirs("data/audio_files", exist_ok=True)
+os.makedirs("data/graphs", exist_ok=True)
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
