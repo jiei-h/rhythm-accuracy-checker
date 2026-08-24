@@ -35,8 +35,7 @@ def analyze():
     onsets = onset_detect(y, sr)
     
     deviations, first_onset = calculate_deviations(bpm, time_num, time_den, note_value, onsets)
-    first_onset = onsets[0]
-    average, stdev, extreme, extreme_time_text, first_onset = summarize(deviations, onsets, bpm, time_num, time_den, first_onset)
+    average, stdev, extreme, extreme_time_text = summarize(deviations, onsets, bpm, time_num, time_den, first_onset)
     
     judgment = evaluate_stability(stdev)
     summary = DeviationSummary(average, stdev, extreme, extreme_time_text, judgment)
