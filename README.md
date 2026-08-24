@@ -1,5 +1,8 @@
 # 🥁 Rhythm Accuracy Checker (Web Edition)
 
+🔗 **Live Demo** [https://rhythm-accuracy-checker.onrender.com](https://rhythm-accuracy-checker.onrender.com)
+> Note: Hosted on Render's free tier. The app may take up to 50 seconds to wake up if it has been inactive.
+
 #### Description:
 Rhythm Accuracy Checker is a modern web application designed for musicians and drum educators. It analyzes audio recordings of drum performances and quantifies timing accuracy by comparing hit onsets against a mathematically perfect tempo grid. 
 
