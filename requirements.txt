@@ -1,7 +1,6 @@
-flask
-gunicorn
-librosa
-matplotlib
-numpy
-soundfile
-
+Flask==3.1.3
+gunicorn==23.0.0
+librosa==0.11.0
+matplotlib==3.9.4
+numpy==2.0.2
+soundfile==0.13.1
