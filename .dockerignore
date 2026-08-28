@@ -1,0 +1,8 @@
+.git/
+.venv/
+README.md
+docs/
+data/audio_files/*
+data/graphs/*
+__pycache__/
+*.pyc
